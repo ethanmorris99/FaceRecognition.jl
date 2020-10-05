@@ -2,6 +2,8 @@
 
 FaceRecognition.jl is a Julia package for PCA face recognition.
 
+![align-center](examples/example1.png)
+
 ## Installation
 
 First, download and install Julia. Then clone the repository:
@@ -25,6 +27,7 @@ filename = "example"           # Name for generated image
 generate_example(image_dir, n, d, test_range, filename)
 
 ```
+The example will show the original images, the images reconstructed from eigenfaces, and the absolute pixel differences between the originals and the reconstructions.
 
 
 ## License
