@@ -15,9 +15,9 @@ function generate_example(
       filename::AbstractString
 )
       training_images = load_images(image_dir, n)
-      test_images = load_images(image_dir, 1000:1010)
+      test_images = load_images(image_dir, test_range)
 
-      model = train_model(training_images, d; normalize=false)
+      model = train_model(training_images, d; normalize=true)
 
       reconstructed_images = reconstruct_images(test_images, model)
       example = vcat(
@@ -26,9 +26,10 @@ function generate_example(
             get_difference(test_images, reconstructed_images).*3
       )
       save(string("./examples/", filename, ".png"), example)
+      save(string("./examples/", filename, "_eigenfaces.png"), reduce(hcat, get_eigenfaces(model, d)))
       return example
 end
 
-
+#generate_example("./data/images/", 1000, 50, 1001:1010, "example2")
 
 #%%
