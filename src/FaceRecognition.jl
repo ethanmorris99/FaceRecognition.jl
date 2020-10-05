@@ -18,6 +18,7 @@ export  load_images,
         reconstruct_images,
         get_difference,
         get_eigenfaces,
-        save
+        save,
+        load
 
 end

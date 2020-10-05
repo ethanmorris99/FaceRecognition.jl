@@ -46,7 +46,7 @@ end
 function get_eigenfaces(model, d)
     eigenfaces = []
     for i = 1:d
-        push!(eigenfaces, eigenfaces_to_image(reshape([Float64(i == j) for j in 1:d], d, 1), model))
+        push!(eigenfaces, eigenfaces_to_image(reshape([Float64(i == j ? 100 : 0) for j in 1:d], d, 1), model))
     end
     return eigenfaces
 end

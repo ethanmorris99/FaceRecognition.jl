@@ -5,14 +5,15 @@ Pkg.instantiate()
 using FaceRecognition
 
 #%%
-#   generate_example("./data/images/", 1000, 50, 1001:1010, "example1")
+#   generate_exampleS("./data/images/", 1000, 50, 1001:1010, "example1")
 
 function generate_example(
       image_dir::AbstractString,
       n::Int,
       d::Int,
-      test_range::UnitRange{Int},
-      filename::AbstractString
+      test_range::UnitRange{Int};
+      filename::AbstractString,
+      save_eigenfaces::Bool=false
 )
       training_images = load_images(image_dir, n)
       test_images = load_images(image_dir, test_range)
@@ -25,8 +26,11 @@ function generate_example(
             reduce(hcat, reconstructed_images),
             get_difference(test_images, reconstructed_images).*3
       )
-      save(string("./examples/", filename, ".png"), example)
-      save(string("./examples/", filename, "_eigenfaces.png"), reduce(hcat, get_eigenfaces(model, d)))
+      save(string("./examples/", filename, ".png"),  example)
+      if save_eigenfaces
+            eigenfaces = reduce(vcat, (reduce(hcat, get_eigenfaces(model, d))[:, i*128*10+1:(i+1)*128*10] for i in 0:(d ÷ 10)-1))
+            save(string("./examples/eigenfaces.png"), eigenfaces)
+      end
       return example
 end
 
