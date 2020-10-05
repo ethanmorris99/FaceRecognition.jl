@@ -25,6 +25,7 @@ filename = "example"           # Name for generated image
 generate_example(image_dir, n, d, test_range, filename)
 
 ```
+The example will show the original images, the images reconstructed from eigenfaces, and the absolute pixel differences between the originals and the reconstructions.
 
 
 ## License
