@@ -2,6 +2,8 @@
 
 FaceRecognition.jl is a Julia package for PCA face recognition.
 
+![align-center](examples/example1.png)
+
 ## Installation
 
 First, download and install Julia. Then clone the repository:
