@@ -8,6 +8,7 @@ using MultivariateStats
 
 include("load_data.jl")
 include("eigenfaces.jl")
+include("utils.jl")
 
 export  load_images,
         Model,
@@ -20,6 +21,7 @@ export  load_images,
         get_eigenfaces,
         save,
         load,
-        RGB
+        RGB,
+        memoize_maker
 
 end
