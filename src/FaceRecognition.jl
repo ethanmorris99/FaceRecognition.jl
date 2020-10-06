@@ -11,6 +11,7 @@ include("eigenfaces.jl")
 include("utils.jl")
 
 export  load_images,
+        get_image_matrix,
         Model,
         train_model,
         image_to_eigenfaces,
@@ -19,9 +20,10 @@ export  load_images,
         reconstruct_images,
         get_difference,
         get_eigenfaces,
+        memoize_maker,
         save,
         load,
         RGB,
-        memoize_maker
-
+        Gray,
+        N0f8
 end

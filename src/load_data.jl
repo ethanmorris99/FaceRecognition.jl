@@ -1,6 +1,6 @@
 
 function get_image_matrix(image_file::AbstractString)
-    image = load(image_file)
+    image = RGB.(Gray.(load(image_file)))
     #image_matrix = convert(Array{Float64}, Gray.(image))
     image_matrix = reduce(hcat, eachslice(Float64.(channelview(image)), dims=1))
     return image_matrix
