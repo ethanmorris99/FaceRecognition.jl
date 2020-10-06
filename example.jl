@@ -21,8 +21,13 @@ function generate_example(
       model = train_model(training_images, d; normalize=true)
 
       reconstructed_images = reconstruct_images(test_images, model)
+      recombine(image) = RGB.(
+            image[:, 1:128],
+            image[:, 128+1:128*2],
+            image[:, 128*2+1:128*3]
+      )
       example = vcat(
-            reduce(hcat, test_images),
+            reduce(hcat, recombine.(test_images)),
             reduce(hcat, reconstructed_images),
             get_difference(test_images, reconstructed_images).*3
       )

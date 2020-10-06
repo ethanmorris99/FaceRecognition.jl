@@ -23,14 +23,22 @@ function image_to_eigenfaces(image, P::PCA{Float64})
 end
 
 function eigenfaces_to_image(eigenfaces, M::Model)
-    return Gray.(reshape(StatsBase.reconstruct(M.Z, reconstruct(M.P, eigenfaces)), 128, 128))
+    image = reshape(StatsBase.reconstruct(M.Z, reconstruct(M.P, eigenfaces)), 128, 128*3)
+    r = image[:, 1:128]
+    g = image[:, 128+1:128*2]
+    b = image[:, 128*2+1:128*3]
+    return RGB.(r, g, b)
 end
 
 function eigenfaces_to_image(eigenfaces, P::PCA{Float64})
-    return Gray.(reshape(reconstruct(P, eigenfaces), 128, 128))
+    image = reshape(reconstruct(P, eigenfaces), 128, 128*3)
+    r = image[:, 1:128]
+    g = image[:, 128+1:128*2]
+    b = image[:, 128*2+1:128*3]
+    return RGB.(r, g, b)
 end
 
-function reconstruct_image(image::Array{Gray{N0f8},2}, model)
+function reconstruct_image(image::Array{Float64, 2}, model)
     return eigenfaces_to_image(image_to_eigenfaces(image, model), model)
 end
 
@@ -39,7 +47,13 @@ function reconstruct_images(images, model)
 end
 
 function get_difference(images, approximations)
-    Gray.(abs.(reduce(hcat, images) .- reduce(hcat, approximations)))
+    recombine(image) = RGB.(
+          image[:, 1:128],
+          image[:, 128+1:128*2],
+          image[:, 128*2+1:128*3]
+    )
+    to_array(img) = convert(Array{Float64, 2}, Gray.(img))
+    Gray.(abs.(reduce(hcat, to_array.(recombine.(images))) .- reduce(hcat, to_array.(approximations)), ))
 end
 
 

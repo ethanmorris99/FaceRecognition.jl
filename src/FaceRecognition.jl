@@ -19,6 +19,7 @@ export  load_images,
         get_difference,
         get_eigenfaces,
         save,
-        load
+        load,
+        RGB
 
 end
